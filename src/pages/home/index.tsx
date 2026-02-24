@@ -47,15 +47,18 @@ export default function Home() {
       <h1 className="text-5xl mb-10 pt-2.5 text-blue-900 bg-blue-100 w-full text-center sticky top-0">
         Pokemons
       </h1>
-      <div ref={card} className="modal pokemon-modal bg-[rgba(0,0,0,0.5)] md:hidden flex items-center! justify-center!">
+      <div
+        ref={card}
+        className="modal pokemon-modal bg-[rgba(0,0,0,0.5)] md:hidden flex items-center! justify-center!"
+      >
         {pokemon && (
           <div className="flex flex-col items-center p-4 gap-4 bg-white rounded shadow-md min-w-85 min-h-85 relative ">
             <FontAwesomeIcon
               icon={faXmark}
               className="absolute right-2 top-3"
-              onClick={() => { 
+              onClick={() => {
                 card.current?.removeAttribute("open");
-                setPokemon(null)
+                setPokemon(null);
               }}
             />
             <img
@@ -73,7 +76,7 @@ export default function Home() {
             listaDb.map((item: ListItem, index: number) => (
               <li
                 key={item.name}
-                className="flex flex-col shadow-md p-2 rounded bg-white "
+                className={`flex flex-col shadow-md p-2 rounded ${pokemon?.name === item.name ? "bg-blue-500 [&>a]:text-white text-white" : "bg-white"}`}
               >
                 <span className="flex justify-between">
                   Nome: {item.name} <p>{index + 1}</p>
@@ -95,19 +98,19 @@ export default function Home() {
         </ul>
 
         {pokemon && (
-          <div className="md:flex flex-col items-center p-4 gap-4 bg-white rounded shadow-md min-w-65 min-h-65 relative hidden">
-            <FontAwesomeIcon
-              icon={faXmark}
-              className="absolute right-2 top-3"
-              onClick={() => setPokemon(null)}
-            />
-            <img
-              src={pokemon.sprites.other["official-artwork"].front_default}
-              alt={pokemon.name}
-              className="w-60 h-60 animate-(--show-top)"
-            />
-            <h2 className="text-2xl">{pokemon.name}</h2>
-          </div>
+            <div className="md:flex flex-col items-center p-4 gap-4 bg-white rounded shadow-md w-full relative hidden">
+              <FontAwesomeIcon
+                icon={faXmark}
+                className="absolute right-2 top-3"
+                onClick={() => setPokemon(null)}
+              />
+              <img
+                src={pokemon.sprites.other["official-artwork"].front_default}
+                alt={pokemon.name}
+                className="w-60 h-60 animate-(--show-top)"
+              />
+              <h2 className="text-2xl">{pokemon.name}</h2>
+            </div>
         )}
       </div>
     </div>
